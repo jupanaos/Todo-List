@@ -19,72 +19,101 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
      */
-    private $username;
+    private string $username;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
-    private $password;
+    private string $password;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
      */
-    private $email;
+    private string $email;
 
-    public function getId()
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername($username)
+    public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
     }
 
-    public function getSalt()
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
     {
         return null;
     }
 
-    public function getPassword()
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email):self
     {
         $this->email = $email;
+
+        return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
-        return array('ROLE_USER');
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function eraseCredentials()
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
