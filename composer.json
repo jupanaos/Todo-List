@@ -29,7 +29,8 @@
         "doctrine/common": "^2",
         "symfony/security-bundle": "4.4",
         "symfony/apache-pack": "^1.0",
-        "symfony/webpack-encore-bundle": "^1.16"
+        "symfony/webpack-encore-bundle": "^1.16",
+        "symfony/validator": "^5.4"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
