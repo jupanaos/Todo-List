@@ -38,7 +38,8 @@
         "symfony/console": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
         "symfony/dotenv": "5.4.*",
-        "symfony/translation": "5.4.*"
+        "symfony/translation": "5.4.*",
+        "symfony/runtime": "5.4.*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "5.4.*",
@@ -71,7 +72,8 @@
     },
     "config": {
         "allow-plugins": {
-            "symfony/flex": true
+            "symfony/flex": true,
+            "symfony/runtime": true
         }
     },
         "conflict": {
