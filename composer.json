@@ -30,7 +30,8 @@
         "symfony/security-bundle": "4.4",
         "symfony/apache-pack": "^1.0",
         "symfony/webpack-encore-bundle": "^1.16",
-        "symfony/validator": "^4.4"
+        "symfony/validator": "^4.4",
+        "symfony/http-foundation": "^4.4"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
