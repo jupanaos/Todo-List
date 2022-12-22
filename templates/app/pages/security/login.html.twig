@@ -7,7 +7,7 @@
         <div class="alert alert-danger" role="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('login_check') }}" method="post">
+    <form action="{{ path('login') }}" method="post">
         {% if app.user %}
             <div class="mb-3 text-center">
                 Vous êtes connecté.e en tant que {{ app.user.userIdentifier }}, <a href="{{ path('logout') }}">Se déconnecter ?</a>
@@ -19,9 +19,7 @@
             <label for="password">Mot de passe :</label>
             <input type="password" id="password" name="_password" />
 
-            <input type="hidden" name="_csrf_token"
-                        value="{{ csrf_token('authenticate') }}"
-            >
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
             <button class="btn btn-lg btn-primary" type="submit">Se connecter</button>
         {% endif %}
