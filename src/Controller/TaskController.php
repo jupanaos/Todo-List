@@ -49,7 +49,7 @@ class TaskController extends AbstractController
         }
 
         return $this->render('app/pages/task/create.html.twig', [
-            'form' => $form
+            'form' => $form->createView(),
         ]);
     }
 
@@ -72,7 +72,7 @@ class TaskController extends AbstractController
         }
 
         return $this->render('app/pages/task/edit.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
             'task' => $task,
         ]);
     }

@@ -1,13 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends 'app/layout.html.twig' %}
 
-{% block body %}
-    <div class="row">
-        {{ form_start(form, {'action' : path('task_create')}) }}
-            {{ form_widget(form) }}
+{% block title %}Ajouter une tâche - ToDo & Co{% endblock %}
 
-            <button type="submit" class="btn btn-success pull-right">Ajouter</button>
-        {{ form_end(form) }}
+{% block content %}
+    <section class="main-content">
+        <h1>Créer une tâche</h1>
+        {% include 'app/pages/task/_form.html.twig' %} 
 
-        <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
-    </div>
+        <div>
+            <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+        </div>
+    </section>
 {% endblock %}

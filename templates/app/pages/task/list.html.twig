@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'app/layout.html.twig' %}
 
-{% block header_img %}<img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">{% endblock %}
 
-{% block body %}
+{% block content %}
+    <img class="slide-image" src="{{ asset('img/todolist_content.jpg') }}" alt="todo list">
     <a href="{{ path('task_create') }}" class="btn btn-info pull-right">Créer une tâche</a>
     <div class="row">
         {% for task in tasks %}
