@@ -14,12 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
-    public function __construct(
-        private EntityManagerInterface $em,
-        private UserRepository $userRepository,)
+    public function __construct(private EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->userRepository = $userRepository;
     }
     
     #[Route('/users', name: 'user_list')]
