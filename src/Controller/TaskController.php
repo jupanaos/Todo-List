@@ -30,7 +30,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/tasks/create', name: 'task_create')]
+    #[Route('/tasks/create', name: 'task_create', methods: ['GET', 'POST'])]
     public function create(Request $request, TaskRepository $taskRepository): Response
     {
         $task = new Task();
@@ -40,6 +40,7 @@ class TaskController extends AbstractController
         ;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $task->setAuthor($this->getUser());
             $taskRepository->add($task);
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
@@ -52,7 +53,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/tasks/{id}/edit', name: 'task_edit')]
+    #[Route('/tasks/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
     public function edit(Task $task, Request $request, TaskRepository $taskRepository)
     {
         $form = $this
