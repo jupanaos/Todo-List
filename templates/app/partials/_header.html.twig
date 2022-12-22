@@ -1,0 +1,26 @@
+<header class="header" id="header_navbar">
+    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">To Do List app</a>
+
+                <a href="{{ path('homepage')}}"><img class="header_logo" src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header_wrapper">
+        <ul>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a></li>
+            {% else %}
+            
+                {% if app.user %}
+                    <li><a href="{{ path('app_logout') }}"><i class="bi bi-arrow-return-left"></i> <span>Déconnexion</span></a></li>
+                {% endif %}
+                
+                <li><a href="{{ path('login') }}" class="btn btn-success">Se connecter</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</header>

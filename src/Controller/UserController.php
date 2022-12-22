@@ -19,7 +19,7 @@ class UserController extends AbstractController
         $this->em = $em;
     }
     
-    #[Route('/users', name: 'user_list')]
+    #[Route('/users', name: 'user_list', methods: ['GET'])]
     public function list(): Response
     {
         $users = $this->em
@@ -32,7 +32,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/create', name: 'user_create')]
+    #[Route('/users/create', name: 'user_create', methods: ['GET', 'POST'])]
     public function create(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
@@ -63,7 +63,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/users/{id}/edit', name: 'user_edit')]
+    #[Route('/users/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(User $user, Request $request): Response
     {
         $form = $this

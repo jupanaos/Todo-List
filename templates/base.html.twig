@@ -1,86 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}To Do List app!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 minimum-scale=1">
+        <meta name="description" content="Faites vos listes plus facilement !">
+        <meta name="keywords" content="To do, liste, courses, tâche">
+        <title>{% block title %}ToDo & Co{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🏂</text></svg>">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <script src="https://kit.fontawesome.com/eaf4a07cfc.js" crossorigin="anonymous"></script>
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
+
     <body>
         {% block body %}
-        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">To Do List app</a>
-
-                    <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
-                </div>
-            </div>
-        </nav>
-
-        <!-- Page Content -->
-        <div class="container">
-            <div class="row">
-                <a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a>
-
-                {% if app.user %}
-                <a href="{{ path('logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                {% endif %}
-
-                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                <a href="{{ path('login') }}" class="btn btn-success">Se connecter</a>
-                {% endif %}
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    {% for flash_message in app.session.flashBag.get('success') %}
-                        <div class="alert alert-success" role="alert">
-                            <strong>Superbe !</strong> {{ flash_message }}
-                        </div>
-                    {% endfor %}
-
-                    {% for flash_message in app.session.flashBag.get('error') %}
-                        <div class="alert alert-danger" role="alert">
-                            <strong>Oops !</strong> {{ flash_message }}
-                        </div>
-                    {% endfor %}
-
-                    <img class="slide-image" src="{{ asset('img/todolist_homepage.jpg') }}" alt="todo list">
-                </div>
-            </div>
-
-            <br />
-
-            <div class="row">
-                <div class="col-md-12">
-                </div>
-            </div>
-        </div>
-        <!-- /.container -->
-
-        <div class="container">
-
-            <hr>
-            <footer>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p class="pull-right">Copyright &copy; OpenClassrooms</p>
-                    </div>
-                </div>
-            </footer>
-
-        </div>
         {% endblock %}
-
     </body>
 </html>
-
-

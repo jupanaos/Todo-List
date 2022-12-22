@@ -18,14 +18,14 @@ class TaskController extends AbstractController
         $this->em = $em;
     }
     
-    #[Route('/tasks', name: 'task_list')]
+    #[Route('/tasks', name: 'task_list', methods: ['GET'])]
     public function list(): Response
     {
         $tasks = $this->em
         ->getRepository(Task::class)
         ->findAll();
 
-        return $this->render('task/list.html.twig', [
+        return $this->render('app/pages/task/list.html.twig', [
             'tasks' => $tasks
         ]);
     }
@@ -48,7 +48,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/create.html.twig', [
+        return $this->render('app/pages/task/create.html.twig', [
             'form' => $form
         ]);
     }
@@ -71,7 +71,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list');
         }
 
-        return $this->render('task/edit.html.twig', [
+        return $this->render('app/pages/task/edit.html.twig', [
             'form' => $form,
             'task' => $task,
         ]);

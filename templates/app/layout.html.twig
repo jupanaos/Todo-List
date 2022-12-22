@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+
+{% block body %}
+    {% include 'app/partials/_header.html.twig' %}
+
+    {% include "app/partials/_flash.html.twig" %}
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
+
+    {% include 'app/partials/_footer.html.twig' %}
+{% endblock body %}

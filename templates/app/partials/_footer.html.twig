@@ -1,0 +1,12 @@
+<footer>
+    <span><span>ToDo</span><span class="text-primary">& Co</span></span>
+        <ul>
+            <li><a class="link" href="{{ path('homepage') }}">Accueil</a></li>
+            {% if app.user %}
+                <li><a href="{{ path('app_logout') }}"><span>Déconnexion</span></a></li>
+            {% else %}
+                <li><a href="{{ path('login') }}">Se connecter</a></li>
+            {% endif %}
+        </ul>
+    <p class="copyright">Copyright&copy;{{ 'now' | date('Y') }} Julie Pariona pour OpenClassrooms</p>
+</footer>
