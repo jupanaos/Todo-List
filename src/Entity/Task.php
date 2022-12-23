@@ -2,18 +2,14 @@
 
 namespace App\Entity;
 
+use App\Repository\TaskRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime as ConstraintsDateTime;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @ORM\Entity
- * @ORM\Table
- */
-#[ORM\Entity()]
-#[ORM\Table('task')]
+#[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
     #[ORM\Id]

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['email'])]
+#[UniqueEntity(fields: ['email', 'username'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -75,7 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
@@ -83,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
