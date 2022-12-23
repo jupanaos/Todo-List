@@ -1,14 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'app/layout.html.twig' %}
 
 {% block header_title %}<h1>Créer un utilisateur</h1>{% endblock %}
 {% block header_img %}{% endblock %}
 
-{% block body %}
+{% block content %}
     <div class="row">
-        {{ form_start(form, {'action' : path('user_create')}) }}
-            {{ form_widget(form) }}
-
-            <button type="submit" class="btn btn-success pull-right">Ajouter</button>
-        {{ form_end(form) }}
+        {% include 'admin/user/_form.html.twig' %} 
     </div>
 {% endblock %}

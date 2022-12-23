@@ -27,7 +27,7 @@ class UserController extends AbstractController
             ->findAll()
         ;
 
-        return $this->render('user/list.html.twig', [
+        return $this->render('admin/user/list.html.twig', [
             'users' => $users
         ]);
     }
@@ -58,7 +58,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/create.html.twig', [
+        return $this->render('admin/user/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -80,7 +80,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('admin/user/edit.html.twig', [
             'form' => $form->createView(),
             'user' => $user
         ]);
