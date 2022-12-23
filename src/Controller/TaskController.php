@@ -41,7 +41,7 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setAuthor($this->getUser());
-            $taskRepository->add($task);
+            $taskRepository->add($task, true);
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -54,17 +54,15 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
-    public function edit(Task $task, Request $request, TaskRepository $taskRepository)
+    public function edit(Task $task, Request $request, TaskRepository $taskRepository): Response
     {
         $form = $this
             ->createForm(TaskType::class, $task)
             ->handleRequest($request)
         ;
 
-        $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskRepository->add($task);
+            $taskRepository->add($task, true);
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -89,10 +87,9 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
-    public function deleteTask(Task $task)
+    public function deleteTask(Task $task, TaskRepository $taskRepository)
     {
-        $this->em->remove($task);
-        $this->em->flush();
+        $taskRepository->remove($task, true);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
