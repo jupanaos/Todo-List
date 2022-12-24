@@ -6,10 +6,12 @@ use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class TaskController extends AbstractController
 {
@@ -54,6 +56,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('TASK_EDIT', subject: 'task', message: 'No access! Get out!')]
     public function edit(Task $task, Request $request, TaskRepository $taskRepository): Response
     {
         $form = $this
@@ -87,6 +90,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
+    #[Security("is_granted('TASK_DELETE')")]
     public function deleteTask(Task $task, TaskRepository $taskRepository)
     {
         $taskRepository->remove($task, true);
