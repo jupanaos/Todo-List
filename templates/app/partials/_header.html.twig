@@ -12,14 +12,20 @@
     <div class="header_wrapper">
         <ul>
             {% if is_granted('ROLE_ADMIN') %}
-                <li><a href="{{ path('user_create') }}" class="btn btn-primary">Créer un utilisateur</a></li>
+                <li>
+                    <a href="{{ path('user_create') }}"><button class="btn btn-success">Créer un utilisateur</button></a>
+                </li>
             {% endif %}
             
-                {% if app.user %}
-                    <li><a href="{{ path('app_logout') }}" class="btn btn-danger"><span>Déconnexion</span></a></li>
-                {% else %}
-                
-                <li><a href="{{ path('app_login') }}" class="btn btn-primary">Se connecter</a></li>
+            {% if app.user %}
+                <li>
+                    <a href="{{ path('app_logout') }}"><button class="btn btn-danger">Déconnexion</button></a>
+                </li>
+            {% else %}
+            
+                <li>
+                    <a href="{{ path('app_login') }}"><button class="btn btn-primary">Se connecter</a>
+                </li>
             {% endif %}
         </ul>
     </div>
