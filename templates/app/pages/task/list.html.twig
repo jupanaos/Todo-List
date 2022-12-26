@@ -14,8 +14,8 @@
                     </h4>
                     <h4>{{ task.title }}</h4>
                     {% if is_granted('TASK_EDIT', task) %}
-                    <a class="btn btn-primary btn-sm pull-right" href="{{ path('task_edit', {'id' : task.id }) }}">
-                        Editer
+                    <a href="{{ path('task_edit', {'id' : task.id }) }}">
+                        <button class="btn btn-primary btn-sm pull-right">Editer</button>
                     </a>
                     {% endif %}
                     <p>{{ task.content }}</p>
@@ -36,7 +36,10 @@
         </div>
         {% else %}
             <div class="alert alert-warning" role="alert">
-                Il n'y a pas encore de tâche enregistrée. <a href="{{ path('task_create') }}" class="btn btn-warning pull-right">Créer une tâche</a>
+                Il n'y a pas encore de tâche enregistrée.
+                <a href="{{ path('task_create') }}" class="btn btn-warning pull-right">
+                    <button class="btn btn-primary btn-sm pull-right">Créer une tâche</button>
+                </a>
             </div>
         {% endfor %}
     </div>
