@@ -19,4 +19,12 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    public function testLogout(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/logout');
+
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+    }
 }
