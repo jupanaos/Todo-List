@@ -8,8 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class SecurityControllerTest extends WebTestCase
 {
     /**
-     * Summary of testLogin
-     * @covers SecurityController::login
+     * Tests if login page is reachable
+     * @return void
      */
     public function testLogin(): void
     {
