@@ -163,6 +163,26 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
+     * Test task delete with permission (authenticated user is admin)
+     * @return void
+     */
+    public function testDeleteTaskAnonymous(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $taskRepository = static::getContainer()->get(TaskRepository::class);
+
+        $testAdmin = $userRepository->findOneBy(['email' => "admin@todo.fr"]);
+        $client->loginUser($testAdmin);
+
+        $testTask = $taskRepository->findOneBy(['title' => "Tache anonyme"]);
+        $client->request('GET', '/tasks/'.$testTask->getId().'/delete');
+
+        $this->assertResponseStatusCodeSame(302);
+        $this->assertNull($taskRepository->find(5));
+    }
+
+    /**
      * Test task delete with no permission (authenticated user is not the task's author)
      * @return void
      */
