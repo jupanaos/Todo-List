@@ -78,7 +78,7 @@ class TaskControllerTest extends WebTestCase
         $client->loginUser($testUser);
 
         $testTask = $taskRepository->findOneBy(['title' => "Tache user 1"]);
-        $client->request('GET', 'tasks/'.$testTask->getId().'/edit');
+        $client->request('GET', '/tasks/'.$testTask->getId().'/edit');
 
         $client->submitForm(
             'Editer', [
@@ -112,9 +112,75 @@ class TaskControllerTest extends WebTestCase
         $client->followRedirects();
 
         $testTask = $taskRepository->findOneBy(['title' => "Tache user 2"]);
-        $client->request('GET', 'tasks/'.$testTask->getId().'/edit');
+        $client->request('GET', '/tasks/'.$testTask->getId().'/edit');
 
         $this->assertNotEquals($testUser->getId(), $testTask->getAuthor()->getId());
         $this->assertEquals(403, $client->getResponse()->getStatusCode());
     }
+
+    /**
+     * Test task status toggle
+     * @return void
+     */
+    public function testToggleTask(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $taskRepository = static::getContainer()->get(TaskRepository::class);
+
+        $testUser = $userRepository->findOneBy(['email' => "user1@todo.fr"]);
+        $client->loginUser($testUser);
+
+        $testTask = $testUser->getTasks()[0];
+        $this->assertEquals(false, $testTask->isDone());
+
+        $client->request('GET', '/tasks/'.$testTask->getId().'/toggle');
+
+        $taskRepository = static::getContainer()->get(TaskRepository::class);
+        $testTask = $taskRepository->findOneBy(['id' => $testTask->getId()]);
+
+        $this->assertEquals(true, $testTask->isDone());
+    }
+
+    /**
+     * Test task delete with permission (authenticated user is the task's author)
+     * @return void
+     */
+    public function testDeleteTaskAllowed(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $taskRepository = static::getContainer()->get(TaskRepository::class);
+
+        $testUser = $userRepository->findOneBy(['email' => "user2@todo.fr"]);
+        $client->loginUser($testUser);
+
+        $testTask = $taskRepository->findOneBy(['title' => "Tache user 2"]);
+        $client->request('GET', '/tasks/'.$testTask->getId().'/delete');
+
+        $this->assertResponseStatusCodeSame(302);
+        $this->assertNull($taskRepository->find(3));
+    }
+
+    /**
+     * Test task delete with no permission (authenticated user is not the task's author)
+     * @return void
+     */
+    public function testDeleteTaskNotAllowed(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $taskRepository = static::getContainer()->get(TaskRepository::class);
+
+        $testUser = $userRepository->findOneBy(['email' => "user1@todo.fr"]);
+        $client->loginUser($testUser);
+
+        $testTask = $taskRepository->findOneBy(['title' => "Tache user 2"]);
+        $client->request('GET', '/tasks/'.$testTask->getId().'/delete');
+
+        $this->assertNotEquals($testUser->getId(), $testTask->getAuthor()->getId());
+        $this->assertResponseStatusCodeSame(403);
+    }
+
+
 }
