@@ -11,7 +11,7 @@ class UserControllerTest extends WebTestCase
      * Test access to the users list without authentication (not allowed)
      * @return void
      */
-    public function testListNoAuth(): void
+    public function testUserListNoAuth(): void
     {
         $client = static::createClient();
         $client->request('GET', '/users');
