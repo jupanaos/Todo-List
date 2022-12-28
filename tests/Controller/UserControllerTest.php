@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class UserControllerTest extends WebTestCase
 {
     /**
-     * Test access to the users list without authentication
+     * Test access to the users list without authentication (not allowed)
      * @return void
      */
     public function testListNoAuth(): void
@@ -20,7 +20,7 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * Test users list access as user 
+     * Test users list access as user (not allowed)
      * @return void
      */
     public function testUserListAsUser(): void
@@ -37,7 +37,7 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * Test users list access as admin
+     * Test users list access as admin (allowed)
      * @return void
      */
     public function testUserListAsAdmin(): void
@@ -55,10 +55,27 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * Test user creation
+     * Test user creation as user (not allowed)
      * @return void
      */
-    public function testUserCreate(): void
+    public function testUserCreateAsUser(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testUser = $userRepository->findOneBy(['email' => 'user1@todo.fr']);
+
+        $client
+            ->loginUser($testUser)
+            ->request('GET', '/users/create');
+
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test user creation as admin (allowed)
+     * @return void
+     */
+    public function testUserCreateAsAdmin(): void
     {
         $client = static::createClient();
         $userRepository = static::getContainer()->get(UserRepository::class);
@@ -68,8 +85,7 @@ class UserControllerTest extends WebTestCase
             ->loginUser($testAdmin)
             ->request('GET', '/users/create');
         $client->submitForm(
-                'Créer l\'utilisateur',
-                [
+                'Créer l\'utilisateur', [
                     'user[username]' => 'username-test',
                     'user[plainPassword][first]' => 'todo-test',
                     'user[plainPassword][second]' => 'todo-test',
@@ -83,7 +99,65 @@ class UserControllerTest extends WebTestCase
         $this->assertNotNull($userRepository->findOneBy(['email' => 'email@test.fr']));
     }
 
-    public function testUserEdit(): void
+    /**
+     * Test user creation with an existing username
+     * @return void
+     */
+    public function testUserCreateUsernameExists(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testAdmin = $userRepository->findOneBy(['email' => 'admin@todo.fr']);
+
+        $client
+            ->loginUser($testAdmin)
+            ->request('GET', '/users/create');
+
+        $client->submitForm(
+            'Créer l\'utilisateur', [
+            'user[username]' => 'user1',
+            'user[plainPassword][first]' => 'todo-test',
+            'user[plainPassword][second]' => 'todo-test',
+            'user[email]' => 'user-exist@todo.fr',
+            'user[roles]' => 'ROLE_USER',
+            ]
+        );
+
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test user creation with an existing email
+     * @return void
+     */
+    public function testUserCreateEmailExists(): void
+    {
+        $client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
+        $testAdmin = $userRepository->findOneBy(['email' => 'admin@todo.fr']);
+
+        $client
+            ->loginUser($testAdmin)
+            ->request('GET', '/users/create');
+
+        $client->submitForm(
+            'Créer l\'utilisateur', [
+            'user[username]' => 'user-exist',
+            'user[plainPassword][first]' => 'todo-test',
+            'user[plainPassword][second]' => 'todo-test',
+            'user[email]' => 'user1@todo.fr',
+            'user[roles]' => 'ROLE_USER',
+            ]
+        );
+
+        $this->assertEquals(500, $client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * Test user edition as admin (allowed)
+     * @return void
+     */
+    public function testUserEditAsAdmin(): void
     {
         $client = static::createClient();
         $userRepository = static::getContainer()->get(UserRepository::class);
@@ -94,8 +168,7 @@ class UserControllerTest extends WebTestCase
         $client->request('GET', '/users/'.$testUser->getId().'/edit');
 
         $client->submitForm(
-            'Editer',
-            [
+            'Editer', [
             'user[username]' => 'user2-edit',
             'user[plainPassword][first]' => 'todo-test',
             'user[plainPassword][second]' => 'todo-test',
