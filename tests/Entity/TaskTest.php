@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 class TaskTest extends KernelTestCase
 {
     /**
-     * Test user setters and getters
+     * Test task setters and getters
      * @return void
      */
     public function testTaskSetAndGet(): void
