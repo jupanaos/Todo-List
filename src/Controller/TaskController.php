@@ -43,6 +43,7 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setAuthor($this->getUser());
+
             $taskRepository->add($task, true);
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
@@ -56,7 +57,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
-    #[IsGranted('TASK_EDIT', subject: 'task', message: 'No access! Get out!')]
+    #[IsGranted('TASK_EDIT', subject: 'task', message: 'Vous n\'avez pas les droits pour éditer cette tâche!')]
     public function edit(Task $task, Request $request, TaskRepository $taskRepository): Response
     {
         $form = $this
@@ -90,7 +91,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
-    #[Security("is_granted('TASK_DELETE')")]
+    #[IsGranted('TASK_DELETE', subject: 'task', message: 'Vous n\'avez pas les droits pour supprimer cette tâche!')]
     public function deleteTask(Task $task, TaskRepository $taskRepository)
     {
         $taskRepository->remove($task, true);
