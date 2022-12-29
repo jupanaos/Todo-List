@@ -14,6 +14,8 @@
     },
     "require": {
         "php": ">=8.0",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^2.7",
         "symfony/monolog-bundle": "^3.5",
@@ -53,7 +55,13 @@
         "symfony/css-selector": "5.4.*",
         "symfony/var-dumper": "5.4.*",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "dama/doctrine-test-bundle": "^7.1"
+        "dama/doctrine-test-bundle": "^7.1",
+        "phpstan/phpstan": "^1.9"
+    },
+    "replace": {
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*"
     },
     "scripts": {
         "post-install-cmd": [

@@ -41,12 +41,12 @@ class Task
         $this->isDone = false;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
@@ -58,7 +58,7 @@ class Task
         return $this;
     }
 
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -70,7 +70,7 @@ class Task
         return $this;
     }
 
-    public function getContent(): string
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -82,7 +82,7 @@ class Task
         return $this;
     }
 
-    public function isDone(): bool
+    public function isDone(): ?bool
     {
         return $this->isDone;
     }
