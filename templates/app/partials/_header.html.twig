@@ -1,32 +1,38 @@
 <header class="header" id="header_navbar">
-    <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">To Do List app</a>
+    <nav class="navbar navbar-fixed-top" role="navigation">
+        <div class="container align-items-center">
+            <div class="d-flex align-items-center">
+                <a href="{{ path('homepage')}}"><img class="header_logo me-4" src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"></a>
+                <a class="navbar-brand" href="{{ path('homepage')}}">
+                    <span class="logo">
+                        <span>ToDo<span class="accent">&</span>Co</span>
+                    </span>
+                </a>
 
-                <a href="{{ path('homepage')}}"><img class="header_logo" src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms"></a>
             </div>
+            
+            <ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{ path('user_create') }}"><button class="btn btn-success"><i class="bi bi-person-fill-add"></i> Créer un utilisateur</button></a>
+                    </li>
+                    <li>
+                        <a href="{{ path('user_list') }}"><button class="btn btn-secondary"><i class="bi bi-list-task"></i>Liste des utilisateurs</button></a>
+                    </li>
+                {% endif %}
+                
+                {% if app.user %}
+                    <li>
+                        <a href="{{ path('app_logout') }}"><button class="btn btn-danger"><i class="bi bi-box-arrow-left"></i> Déconnexion</button></a>
+                    </li>
+                {% else %}
+                
+                    <li>
+                        <a href="{{ path('app_login') }}"><button class="btn btn-success">Se connecter</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </nav>
 
-    <div class="header_wrapper">
-        <ul>
-            {% if is_granted('ROLE_ADMIN') %}
-                <li>
-                    <a href="{{ path('user_create') }}"><button class="btn btn-success">Créer un utilisateur</button></a>
-                </li>
-            {% endif %}
-            
-            {% if app.user %}
-                <li>
-                    <a href="{{ path('app_logout') }}"><button class="btn btn-danger">Déconnexion</button></a>
-                </li>
-            {% else %}
-            
-                <li>
-                    <a href="{{ path('app_login') }}"><button class="btn btn-primary">Se connecter</a>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
 </header>
