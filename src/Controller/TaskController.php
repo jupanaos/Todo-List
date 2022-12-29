@@ -92,7 +92,7 @@ class TaskController extends AbstractController
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
     #[IsGranted('TASK_DELETE', subject: 'task', message: 'Vous n\'avez pas les droits pour supprimer cette tâche!')]
-    public function deleteTask(Task $task, TaskRepository $taskRepository)
+    public function deleteTask(Task $task, TaskRepository $taskRepository): Response
     {
         $taskRepository->remove($task, true);
 
