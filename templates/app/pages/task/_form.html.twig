@@ -1,0 +1,7 @@
+{{ form_start(form, {'attr': {'class': 'form-container'}}) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.content) }}
+
+    <button type="submit" class="btn btn-success self-end">{{ 'edit' in app.request.get('_route') ? 'Editer' : 'Publier' }}</button>
+{{ form_end(form) }}

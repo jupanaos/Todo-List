@@ -1,0 +1,15 @@
+{% extends 'app/layout.html.twig' %}
+
+{% block content %}
+    <section class="main-content">
+        <h1>Modifier <strong>{{ task.title }}</strong></h1>
+
+        <div class="row">
+            {% include 'app/pages/task/_form.html.twig' %}
+        </div>
+
+        <div>
+            <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'app/layout.html.twig' %}
+
+{% block title %}Ajouter une tâche - ToDo & Co{% endblock %}
+
+{% block content %}
+    <section class="container">
+        <h1>Créer une tâche</h1>
+        {% include 'app/pages/task/_form.html.twig' %} 
+
+        <div class="">
+            <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+        </div>
+    </section>
+{% endblock %}

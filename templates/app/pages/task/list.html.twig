@@ -1,0 +1,59 @@
+{% extends 'app/layout.html.twig' %}
+
+{% block content %}
+
+<section class="container">
+    <a href="{{ path('task_create') }}">
+        <button class="btn btn-success mb-4"><i class="bi bi-plus"></i> Créer une tâche</button>
+    </a>
+    <div class="todo-list">
+        {% for task in tasks %}
+        <div class="">
+            <div class="todo-card">
+                {# <h4 class="pull-right">
+                    {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
+                </h4> #}
+                <div class="todo-header">
+                    <div class="d-flex">
+                        <h4>{{ task.title }}</h4>
+                        {% if is_granted('TASK_EDIT', task) %}
+                            <a href="{{ path('task_edit', {'id' : task.id }) }}">
+                                <button class="btn btn-outline-dark btn-sm ms-2"><i class="bi bi-pencil"></i></button>
+                            </a>
+                        {% endif %}
+                    </div>
+                    {% if is_granted('TASK_DELETE', task) %}
+                        <form action="{{ path('task_delete', {'id' : task.id }) }}">
+                            <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
+                        </form>
+                    {% endif %}
+                </div>
+                <div class="todo-body">
+                    <p>{{ task.content }}</p>
+                    <div class="d-flex justify-content-between">
+                        <form action="{{ path('task_toggle', {'id' : task.id }) }}">
+                            {% if not task.isDone %}
+                                <button class="btn btn-outline-success btn-sm">
+                                    <i class="bi bi-square"></i>
+                                </button>
+                            {% else %}
+                                <button class="btn btn-success btn-sm">
+                                    <i class="bi bi-check-square"></i>
+                                </button>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                Il n'y a pas encore de tâche enregistrée.
+                <a href="{{ path('task_create') }}" class="btn btn-warning">
+                    <button class="btn btn-success btn-sm">Créer une tâche</button>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

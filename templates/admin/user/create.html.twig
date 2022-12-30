@@ -1,0 +1,11 @@
+{% extends 'app/layout.html.twig' %}
+
+{% block header_title %}<h1>Créer un utilisateur</h1>{% endblock %}
+{% block header_img %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Créer un utilisateur</h1>
+        {% include 'admin/user/_form.html.twig' %} 
+    </div>
+{% endblock %}
