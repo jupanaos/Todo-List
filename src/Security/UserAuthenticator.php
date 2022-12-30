@@ -25,6 +25,11 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     {
     }
 
+    /**
+     * Authenticate user with email
+     * @param Request $request
+     * @return Passport
+     */
     public function authenticate(Request $request): Passport
     {
         $email = $request->request->get('email', '');

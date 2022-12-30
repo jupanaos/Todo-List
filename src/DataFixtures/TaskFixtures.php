@@ -52,6 +52,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         $task->setAuthor($this->getReference(UserFixtures::ANON_REFERENCE));
         $manager->persist($task);
         $manager->flush();
+
     }
 
     public function getDependencies(): array
