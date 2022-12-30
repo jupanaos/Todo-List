@@ -19,8 +19,15 @@ class TaskRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
+
     }
 
+    /**
+     * Add a task entity
+     * @param Task $entity
+     * @param bool $flush
+     * @return void
+     */
     public function add(Task $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -30,6 +37,12 @@ class TaskRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * Remove a task entity
+     * @param Task $entity
+     * @param bool $flush
+     * @return void
+     */
     public function remove(Task $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -39,40 +52,4 @@ class TaskRepository extends ServiceEntityRepository
         }
     }
 
-    // public function getTaskPaginator(int $offset): Paginator
-    // {
-    //     $query = $this->createQueryBuilder('t')
-    //         ->orderBy('t.updatedAt', 'DESC')
-    //         ->setMaxResults(self::PAGINATOR_PER_PAGE)
-    //         ->setFirstResult($offset)
-    //         ->getQuery()
-    //     ;
-
-    //     return new Paginator($query);
-    // }
-
-//    /**
-//     * @return Task[] Returns an array of Task objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Task
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

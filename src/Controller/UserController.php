@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,6 +18,11 @@ class UserController extends AbstractController
         $this->em = $em;
     }
     
+    /**
+     * List all users
+     *
+     * @return Response
+     */
     #[Route('/users', name: 'user_list', methods: ['GET'])]
     public function list(): Response
     {
@@ -32,23 +36,24 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Create a user
+     *
+     * @param Request $request
+     * @param UserPasswordHasherInterface $userPasswordHasher
+     * @return Response
+     */
     #[Route('/users/create', name: 'user_create', methods: ['GET', 'POST'])]
     public function create(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
         $form = $this
             ->createForm(UserType::class, $user)
-            ->handleRequest($request)
-        ;
+            ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
+            // Encode the plain password
+            $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
 
             $this->em->persist($user);
             $this->em->flush();
@@ -63,13 +68,19 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Edit a user
+     * 
+     * @param Request $request
+     * @param User $user
+     * @return Response
+     */
     #[Route('/users/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(User $user, Request $request): Response
     {
         $form = $this
             ->createForm(UserType::class, $user)
-            ->handleRequest($request)
-        ;
+            ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($user);
