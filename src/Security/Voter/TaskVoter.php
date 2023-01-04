@@ -55,10 +55,6 @@ class TaskVoter extends Voter
 
     private function canDelete(?User $user, mixed $subject): bool
     {
-        if ($subject->getAuthor() === $user || (in_array('ROLE_ANONYMOUS', $subject->getAuthor()->getRoles()) && $this->security->isGranted('ROLE_ADMIN'))) {
-            return true;
-        } else {
-            return false;
-        }
+        return $subject->getAuthor() === $user || (in_array('ROLE_ANONYMOUS', $subject->getAuthor()->getRoles()) && $this->security->isGranted('ROLE_ADMIN'));
     }
 }
