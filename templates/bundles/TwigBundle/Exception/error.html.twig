@@ -1,0 +1,13 @@
+{% extends "app/layout.html.twig" %}
+
+{% block title %}Il y a un problème !{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <div>
+            <p>
+                Il y a un problème ! <a href="{{ path('homepage') }}">Retourner sur la page d'accueil</a>
+            </p>
+        </div>
+    </section>
+{% endblock %}

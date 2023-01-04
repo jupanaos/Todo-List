@@ -43,7 +43,8 @@
         "symfony/translation": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/doctrine-bridge": "5.4.*",
-        "sensio/framework-extra-bundle": "^6.2"
+        "sensio/framework-extra-bundle": "^6.2",
+        "twig/extra-bundle": "^2.12|^3.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^6.2",
