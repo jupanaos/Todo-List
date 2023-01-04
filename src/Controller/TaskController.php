@@ -14,9 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em, private TaskRepository $taskRepository)
     {
         $this->em = $em;
+        $this->taskRepository = $taskRepository;
     }
     
     #[Route('/tasks', name: 'task_list', methods: ['GET'])]
@@ -32,7 +33,7 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/create', name: 'task_create', methods: ['GET', 'POST'])]
-    public function create(Request $request, TaskRepository $taskRepository): Response
+    public function create(Request $request): Response
     {
         $task = new Task();
         $form = $this
@@ -43,7 +44,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setAuthor($this->getUser());
 
-            $taskRepository->add($task, true);
+            $this->taskRepository->add($task, true);
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -57,7 +58,7 @@ class TaskController extends AbstractController
 
     #[Route('/tasks/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
     #[IsGranted('TASK_EDIT', subject: 'task', message: 'Vous n\'avez pas les droits pour éditer cette tâche!')]
-    public function edit(Task $task, Request $request, TaskRepository $taskRepository): Response
+    public function edit(Task $task, Request $request): Response
     {
         $form = $this
             ->createForm(TaskType::class, $task)
@@ -65,7 +66,7 @@ class TaskController extends AbstractController
         ;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskRepository->add($task, true);
+            $this->taskRepository->add($task, true);
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
