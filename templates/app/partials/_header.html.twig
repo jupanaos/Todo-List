@@ -13,10 +13,10 @@
             <ul>
                 {% if is_granted(constant('App\\Entity\\User::ROLE_ADMIN')) %}
                     <li>
-                        <a href="{{ path('user_create') }}"><button class="btn btn-success"><i class="bi bi-person-fill-add"></i> Créer un utilisateur</button></a>
+                        <a href="{{ path('admin_users_create') }}"><button class="btn btn-success"><i class="bi bi-person-fill-add"></i> Créer un utilisateur</button></a>
                     </li>
                     <li>
-                        <a href="{{ path('user_list') }}"><button class="btn btn-secondary"><i class="bi bi-list-task"></i>Liste des utilisateurs</button></a>
+                        <a href="{{ path('admin_users_list') }}"><button class="btn btn-secondary"><i class="bi bi-list-task"></i>Liste des utilisateurs</button></a>
                     </li>
                 {% endif %}
                 

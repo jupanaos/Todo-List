@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+#[Route('/users', name: 'admin_users_')]
 class UserController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $em)
@@ -23,7 +24,7 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    #[Route('/users', name: 'user_list', methods: ['GET'])]
+    #[Route('', name: 'list', methods: ['GET'])]
     public function list(): Response
     {
         $users = $this->em
@@ -43,7 +44,7 @@ class UserController extends AbstractController
      * @param UserPasswordHasherInterface $userPasswordHasher
      * @return Response
      */
-    #[Route('/users/create', name: 'user_create', methods: ['GET', 'POST'])]
+    #[Route('/create', name: 'create', methods: ['GET', 'POST'])]
     public function create(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
@@ -60,7 +61,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('admin_users_list');
         }
 
         return $this->render('admin/user/create.html.twig', [
@@ -75,7 +76,7 @@ class UserController extends AbstractController
      * @param User $user
      * @return Response
      */
-    #[Route('/users/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(User $user, Request $request): Response
     {
         $form = $this
@@ -88,7 +89,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
-            return $this->redirectToRoute('user_list');
+            return $this->redirectToRoute('admin_users_list');
         }
 
         return $this->render('admin/user/edit.html.twig', [

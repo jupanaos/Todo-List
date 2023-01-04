@@ -6,7 +6,7 @@
         <h1>Liste des utilisateurs</h1>
         {% if users|length == 0 %}
             <div class="alert alert-warning" role="alert">
-                Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
+                Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('admin_users_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
             </div>
         {% else %}
             <table class="table">
@@ -25,7 +25,7 @@
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>
                         <td>
-                            <a href="{{ path('user_edit', {'id' : user.id}) }}">
+                            <a href="{{ path('admin_users_edit', {'id' : user.id}) }}">
                                 <button class="btn btn-success btn-sm"><i class="bi bi-pencil"></i> Editer</button>
                             </a>
                         </td>
