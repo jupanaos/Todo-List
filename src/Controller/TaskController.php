@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Task;
@@ -49,7 +51,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
-            return $this->redirectToRoute('list');
+            return $this->redirectToRoute('app_tasks_list');
         }
 
         return $this->render('app/pages/task/create.html.twig', [
@@ -71,7 +73,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('list');
+            return $this->redirectToRoute('app_tasks_list');
         }
 
         return $this->render('app/pages/task/edit.html.twig', [
@@ -88,7 +90,7 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
-        return $this->redirectToRoute('list');
+        return $this->redirectToRoute('app_tasks_list');
     }
 
     #[Route('/{id}/delete', name: 'delete')]
@@ -99,6 +101,6 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('list');
+        return $this->redirectToRoute('app_tasks_list');
     }
 }
