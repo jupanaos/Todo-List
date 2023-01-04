@@ -22,7 +22,7 @@
                             </a>
                         {% endif %}
                     </div>
-                    {% if is_granted('TASK_DELETE', task) %}
+                    {% if is_granted(constant('App\\Security\\Voter\\TaskVoter::DELETE'), task) %}
                         <form action="{{ path('task_delete', {'id' : task.id }) }}">
                             <button class="btn btn-outline-danger btn-sm"><i class="bi bi-trash"></i></button>
                         </form>

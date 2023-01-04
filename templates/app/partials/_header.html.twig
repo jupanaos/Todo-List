@@ -11,7 +11,7 @@
             </div>
             
             <ul>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% if is_granted(constant('App\\Entity\\User::ROLE_ADMIN')) %}
                     <li>
                         <a href="{{ path('user_create') }}"><button class="btn btn-success"><i class="bi bi-person-fill-add"></i> Créer un utilisateur</button></a>
                     </li>
